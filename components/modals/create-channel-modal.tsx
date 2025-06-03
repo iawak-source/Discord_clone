@@ -73,23 +73,23 @@ export const CreateChannelModal = () => {
         try {
             const url = qs.stringifyUrl({
                 url: "/api/channels",
-                query:{
+                query: {
                     serverId: params?.serverId
                 }
             });
             await axios.post(url, values);
+            onClose();        
+            router.refresh(); 
+            form.reset();     
 
-            form.reset();
-            router.refresh();
-            onClose();
         } catch (error) {
             console.error("Error creating server:", error);
         }
     }
 
     const handleClose = () => {
-        form.reset();
         onClose();
+        setTimeout(() => form.reset(), 100);
     }
 
     return (
@@ -155,7 +155,7 @@ export const CreateChannelModal = () => {
                                                 ))}
                                             </SelectContent>
                                         </Select>
-                                        <FormMessage/>
+                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />
