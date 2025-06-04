@@ -1,5 +1,6 @@
 "use client";
 
+import qs from "query-string";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -16,16 +17,13 @@ import {
 import { useModal } from "@/hooks/use-modal-store";
 import { Button } from "@/components/ui/button";
 
-
-
-
-
-export const DeleteServerModal = () => {
+export const DeleteChannelModal = () => {
     const { isOpen, onClose, type, data } = useModal();
     const router = useRouter();
 
-    const isModalOpen = isOpen && type === "deleteServer";
-    const { server } = data;
+
+    const isModalOpen = isOpen && type === "deleteChannel";
+    const { server, channel } = data;
 
 
     const [isLoading, setIsloading] = useState(false);
@@ -33,28 +31,35 @@ export const DeleteServerModal = () => {
     const onClick = async () => {
         try {
             setIsloading(true);
-            await axios.delete(`/api/servers/${server?.id}`);
+            const url = qs.stringifyUrl({
+                url: `/api/channels/${channel?.id}`,
+                query: {
+                    serverId: server?.id
+                }
+            });
+
+            await axios.delete(url);
             onClose();
 
-            router.push("/");
+            // Đặt push trước, refresh sau
+            router.push(`/servers/${server?.id}`);
             router.refresh();
         } catch (error) {
-            console.log(error);
+            console.log(error)
         } finally {
             setIsloading(false);
         }
-    };
-
+    }
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-12 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
-                        Delete Server
+                        Delete Channel
                     </DialogTitle>
                     <DialogDescription className="text-center text-zinc-500">
-                        Are you sure you want to delete the server ? <br />
-                        <span className="text-indigo-500 font-semibold">{server?.name}</span> will be permanently deleted and you will lose all data associated with it.
+                        Are you sure you want to delete the channel ? <br />
+                        <span className="text-indigo-500 font-semibold">{channel?.name}</span> will be permanently deleted and you will lose all data associated with it.
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="bg-gray-100 px-6 py-4">
