@@ -4,7 +4,7 @@ import qs from "query-string";
 import *as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { ChannelType } from "@prisma/client";
+import { ChannelType } from "@/lib/generated/prisma";
 
 
 import axios from "axios";
@@ -60,7 +60,7 @@ export const EditChannelModal = () => {
     const { channel, server } = data;
 
 
-    const form = useForm({
+    const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
@@ -70,7 +70,7 @@ export const EditChannelModal = () => {
 
     useEffect(() => {
        if(channel){
-        form.setValue("name",channel.name);
+        form.setValue("name", channel.name);
         form.setValue("type", channel.type);
        }
     }, [form, channel]);

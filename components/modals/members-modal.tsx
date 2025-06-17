@@ -14,7 +14,7 @@ import {
     ShieldCheck,
     ShieldQuestion,
 } from "lucide-react";
-import { MemberRole } from "@prisma/client";
+import { MemberRole } from "@/lib/generated/prisma";
 import { useRouter } from "next/navigation";
 
 import {

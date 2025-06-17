@@ -1,6 +1,6 @@
 "use client";
 
-import { Member, Profile } from "@prisma/client";
+import { Member, Profile } from "@/lib/generated/prisma";
 import { ChatWelcome } from "@/components/chat/chat-welcome";
 import { useChatQuery } from "@/hooks/use-chat-query";
 import { Loader2, ServerCrash } from "lucide-react";

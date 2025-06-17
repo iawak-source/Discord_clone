@@ -1,6 +1,6 @@
 import { useSocket } from "@/components/providers/socket-provider";
 import { Message } from "@/lib/generated/prisma";
-import { Member, Profile } from "@prisma/client";
+import { Member, Profile } from "@/lib/generated/prisma";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 

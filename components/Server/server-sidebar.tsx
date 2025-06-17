@@ -1,4 +1,4 @@
-import { ChannelType, MemberRole } from "@prisma/client";
+import { ChannelType, MemberRole } from "@/lib/generated/prisma";
 import { redirect } from "next/navigation";
 
 import { currentProfile } from "@/lib/current-profile";

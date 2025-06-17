@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { MemberRole } from "@prisma/client";
+import { MemberRole } from "@/lib/generated/prisma";
 
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -59,7 +59,7 @@ export async function PATCH(
 ) {
     try {
         const profile = await currentProfile();
-        const { name, type} = await req.json();
+        const { name, type } = await req.json();
         const { searchParams } = new URL(req.url);
 
         const serverId = searchParams.get("serverId");
@@ -88,20 +88,20 @@ export async function PATCH(
                 }
             },
             data: {
-              channels:{
-                update:{
-                  where:{
-                    id: params.channelId,
-                    NOT:{
-                      name: "general",
-                    },
-                  },
-                  data:{
-                    name,
-                    type,
-                  }
+                channels: {
+                    update: {
+                        where: {
+                            id: params.channelId,
+                            NOT: {
+                                name: "general",
+                            },
+                        },
+                        data: {
+                            name,
+                            type,
+                        }
+                    }
                 }
-              }
             }
         })
         return NextResponse.json(server);
